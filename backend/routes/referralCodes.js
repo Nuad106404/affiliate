@@ -55,6 +55,7 @@ router.get('/', requireAdmin, async (req, res) => {
  */
 router.post('/generate', requireAdmin, async (req, res) => {
   try {
+    console.log('Generating referral codes - Request body:', req.body);
     const { count = 1 } = req.body;
     
     if (count < 1 || count > 100) {
@@ -64,32 +65,50 @@ router.post('/generate', requireAdmin, async (req, res) => {
     const generatedCodes = [];
     
     for (let i = 0; i < count; i++) {
-      // Create a user to store the referral code in MongoDB
-      const tempUser = new User({
-        name: `Referral Code Holder`,
-        phone: `refcode-${Date.now()}-${i}`,  // Unique phone to avoid duplicates
-        password: 'temporary-' + Math.random().toString(36).substring(2, 10),
-        role: 'client',
-        status: 'inactive',  // Inactive until used
-      });
-      
-      // Generate unique 6-digit referral code
-      await tempUser.generateReferralCode();
-      
-      // Save the user to MongoDB
-      await tempUser.save();
-      
-      generatedCodes.push({
-        id: tempUser._id,
-        code: tempUser.referralCode,
-        createdAt: new Date().toISOString().slice(0, 16).replace('T', ' ')
-      });
+      try {
+        console.log(`Creating referral code ${i + 1}/${count}`);
+        
+        // Create a user to store the referral code in MongoDB
+        const tempUser = new User({
+          name: `Referral Code Holder`,
+          phone: `refcode-${Date.now()}-${i}`,  // Unique phone to avoid duplicates
+          password: 'temporary-' + Math.random().toString(36).substring(2, 10),
+          role: 'client',
+          status: 'inactive',  // Inactive until used
+        });
+        
+        console.log('Temp user created, generating referral code...');
+        
+        // Generate unique 6-digit referral code
+        await tempUser.generateReferralCode();
+        
+        console.log('Referral code generated:', tempUser.referralCode);
+        
+        // Save the user to MongoDB
+        await tempUser.save();
+        
+        console.log('User saved successfully');
+        
+        generatedCodes.push({
+          id: tempUser._id,
+          code: tempUser.referralCode,
+          createdAt: new Date().toISOString().slice(0, 16).replace('T', ' ')
+        });
+      } catch (innerError) {
+        console.error(`Error creating referral code ${i + 1}:`, innerError);
+        throw innerError;
+      }
     }
     
+    console.log('All referral codes generated successfully:', generatedCodes.length);
     res.status(201).json({ referralCodes: generatedCodes });
   } catch (error) {
     console.error('Error generating referral codes:', error);
-    res.status(500).json({ message: 'Server error' });
+    console.error('Error stack:', error.stack);
+    res.status(500).json({ 
+      message: 'Server error',
+      error: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error'
+    });
   }
 });
 
