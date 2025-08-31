@@ -799,45 +799,30 @@ const UserManagement: React.FC = () => {
         </button>
       </div>
 
-      {/* Modern Search and Filters */}
-      <div className="mb-8">
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-            {/* Search Input */}
-            <div className="lg:col-span-2">
-              <div className="relative">
-                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                <input
-                  type="text"
-                  placeholder="ค้นหาด้วยชื่อ อีเมล หรือเบอร์โทร..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-12 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 hover:border-gray-300 text-sm"
-                />
-              </div>
-            </div>
-            
-            {/* Status Filter */}
-            <div>
-              <select
-                value={statusFilter}
-                onChange={(e) => setStatusFilter(e.target.value)}
-                className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 hover:border-gray-300 text-sm bg-white"
-              >
-                <option value="all">สถานะทั้งหมด</option>
-                <option value="active">ใช้งาน</option>
-                <option value="inactive">ไม่ใช้งาน</option>
-              </select>
-            </div>
-          </div>
-          
-          {/* Stats Row */}
-          <div className="mt-4 pt-4 border-t border-gray-100">
-            <div className="flex items-center justify-between text-sm text-gray-600">
-              <span>พบผู้ใช้ทั้งหมด {totalUsers} คน</span>
-              <span>หน้า {currentPage} จาก {totalPages}</span>
-            </div>
-          </div>
+      {/* Search and Filters */}
+      <div className="mb-6 space-y-4">
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+          <input
+            type="text"
+            placeholder="ค้นหาด้วยชื่อ อีเมล หรือเบอร์โทร..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+          />
+        </div>
+        
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">สถานะ</label>
+          <select
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value)}
+            className="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+          >
+            <option value="all">สถานะทั้งหมด</option>
+            <option value="active">ใช้งาน</option>
+            <option value="inactive">ไม่ใช้งาน</option>
+          </select>
         </div>
       </div>
       
@@ -847,171 +832,204 @@ const UserManagement: React.FC = () => {
         </div>
       )}
 
-      {/* Modern Users Grid */}
-      <div className="bg-white shadow-sm rounded-xl border border-gray-200 overflow-hidden">
+      {/* Users Table */}
+      <div className="bg-white shadow-md rounded-lg overflow-hidden">
         {loading ? (
-          <div className="p-12 flex justify-center">
+          <div className="p-8 flex justify-center">
             <LoadingSpinner size="lg" />
           </div>
         ) : (
-          <div className="p-6">
-            <div className="grid gap-6">
-              {filteredUsers?.map((user) => (
-                <div key={user._id} className="bg-gray-50 rounded-xl p-6 hover:bg-gray-100 transition-all duration-200">
-                  <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-                    {/* User Info Section */}
-                    <div className="lg:col-span-1">
-                      <div className="flex items-start space-x-3">
-                        <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold text-lg">
-                          {user.name.charAt(0).toUpperCase()}
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <h3 className="text-lg font-semibold text-gray-900 truncate">{user.name}</h3>
-                          <p className="text-sm text-gray-500">ID: {user._id.slice(-8)}</p>
-                          <div className="mt-2">
-                            <UserStatusIndicator 
-                              userId={user._id} 
-                              isOnline={isUserOnline(user._id)} 
-                            />
-                          </div>
-                        </div>
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    ผู้ใช้
+                  </th>
+                  <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    ติดต่อและยืนยันตัวตน
+                  </th>
+                  <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    กิจกรรม
+                  </th>
+                  <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    ข้อความ
+                  </th>
+                  <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    ข้อความแบน
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    สถานะ
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    การเงิน
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    การมีส่วนร่วม
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    ที่อยู่
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    ธนาคาร
+                  </th>
+                  <th className="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    การถอนเงิน
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    การดำเนินการ
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {filteredUsers?.map((user) => (
+                  <tr key={user._id}>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div>
+                        <div className="text-sm font-medium text-gray-900">{user.name}</div>
+                        <div className="text-xs text-gray-500">ID: {user._id.slice(-8)}</div>
                       </div>
-                      
-                      {/* Contact Info */}
-                      <div className="mt-4 space-y-2">
-                        <div className="text-sm">
-                          <span className="text-gray-500">เบอร์โทร:</span>
-                          <span className="ml-2 font-medium text-gray-900">{user.phone}</span>
-                        </div>
-                        <div className="text-sm">
-                          <span className="text-gray-500">รหัสผ่าน:</span>
-                          <span className="ml-2 font-medium text-gray-900">{user.password || 'ไม่มี'}</span>
-                        </div>
+                    </td>
+                    <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-900">
+                      <div className="space-y-1">
+                        <div><strong>เบอร์โทร:</strong> {user.phone}</div>
+                        <div><strong>รหัสผ่าน:</strong> {user.password || 'ไม่มี'}</div>
                       </div>
-                    </div>
-                    
-                    {/* Quick Actions Section */}
-                    <div className="lg:col-span-2">
-                      {/* Message Input */}
-                      <div className="mb-4">
-                        <label className="block text-sm font-medium text-gray-700 mb-2">ส่งข้อความด่วน</label>
-                        <div className="relative">
+                    </td>
+                    <td className="px-3 py-4 whitespace-nowrap">
+                      <UserStatusIndicator 
+                        userId={user._id} 
+                        isOnline={isUserOnline(user._id)} 
+                      />
+                    </td>
+                    <td className="px-3 py-4 whitespace-nowrap">
+                      <div className="flex items-center space-x-2 max-w-7xl">
+                        <div className="relative flex-1">
                           <input 
                             type="text" 
-                            placeholder="พิมพ์ข้อความที่ต้องการส่ง..."
+                            id={`message-${user._id}`}
+                            name="user_message" 
+                            placeholder="ข้อความด่วน..."
                             value={messages[user._id] || ''}
                             onChange={(e) => handleMessageChange(user._id, e.target.value)}
-                            className="w-full pl-4 pr-12 py-3 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 hover:border-gray-300"
+                            className="w-7xl pl-3 pr-10 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 hover:border-gray-400"
                           />
                           <button
                             onClick={() => sendMessage(user._id)}
-                            className="absolute right-2 top-1/2 transform -translate-y-1/2 p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all duration-200"
+                            className="absolute right-1 top-1/2 transform -translate-y-1/2 p-1.5 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-md transition-all duration-200"
                             title="ส่งข้อความ"
                           >
-                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                             </svg>
                           </button>
                         </div>
                       </div>
-                      
-                      {/* Ban Message Input */}
-                      <div className="mb-4">
-                        <label className="block text-sm font-medium text-gray-700 mb-2">ข้อความแบน</label>
-                        <div className="flex space-x-2">
-                          <input 
-                            type="text" 
-                            placeholder="กรุณาติดต่อผู้ดูแลระบบ"
-                            value={banMessages[user._id] || user.banMessage || ''}
-                            onChange={(e) => updateBanMessage(user._id, e.target.value)}
-                            className="flex-1 px-3 py-2 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 hover:border-gray-300"
-                          />
-                          <button
-                            onClick={() => submitBanMessage(user._id)}
-                            disabled={!banMessages[user._id] || banMessages[user._id] === user.banMessage}
-                            className="px-4 py-2 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
-                          >
-                            บันทึก
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    {/* Status & Actions Section */}
-                    <div className="lg:col-span-1">
-                      {/* Status Toggle */}
-                      <div className="mb-4">
-                        <label className="block text-sm font-medium text-gray-700 mb-2">สถานะ</label>
-                        <select
-                          value={user.status}
-                          onChange={(e) => updateUserStatus(user._id, e.target.value as any)}
-                          className={`w-full px-3 py-2 text-sm font-medium rounded-lg border-0 ${getStatusColor(user.status)} focus:ring-2 focus:ring-blue-500`}
-                        >
-                          <option value="active">ใช้งาน</option>
-                          <option value="inactive">ไม่ใช้งาน</option>
-                        </select>
-                      </div>
-                      
-                      {/* Financial Info */}
-                      <div className="mb-4 p-4 bg-white rounded-lg border border-gray-200">
-                        <h4 className="text-sm font-semibold text-gray-900 mb-3">ข้อมูลการเงิน</h4>
-                        <div className="space-y-2 text-sm">
-                          <div className="flex justify-between">
-                            <span className="text-gray-600">เครดิต:</span>
-                            <button
-                              onClick={() => openCreditsModal(user)}
-                              className="flex items-center text-blue-600 hover:text-blue-900 font-medium"
-                            >
-                              <DollarSign className="w-4 h-4 mr-1" />{user.credits || 0}
-                            </button>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-gray-600">ยอดเงิน:</span>
-                            <span className="font-medium">${user.accountBalance || 0}</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-gray-600">รายได้วันนี้:</span>
-                            <span className="font-medium text-green-600">${user.todayEarnings || 0}</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-gray-600">รายได้สัปดาห์:</span>
-                            <span className="font-medium">${user.weekEarnings || 0}</span>
-                          </div>
-                        </div>
-                      </div>
-                      
-                      {/* Action Buttons */}
-                      <div className="flex flex-col space-y-2">
+                    </td>
+                    <td className="px-3 py-4 whitespace-nowrap">
+                      <div className="flex space-x-2">
+                        <input 
+                          type="text" 
+                          placeholder="กรุณาติดต่อผู้ดูแลระบบ"
+                          value={banMessages[user._id] || user.banMessage || ''}
+                          onChange={(e) => updateBanMessage(user._id, e.target.value)}
+                          className="flex-1 px-2 py-1 text-sm border border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500"
+                        />
                         <button
-                          onClick={() => openWithdrawalModal(user)}
-                          className="flex items-center justify-center px-4 py-2 bg-blue-100 text-blue-700 text-sm font-medium rounded-lg hover:bg-blue-200 transition-colors"
+                          onClick={() => submitBanMessage(user._id)}
+                          disabled={!banMessages[user._id] || banMessages[user._id] === user.banMessage}
+                          className="px-3 py-1 text-xs bg-blue-600 text-white rounded hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
                         >
-                          <Eye className="w-4 h-4 mr-2" />
-                          ดูการถอนเงิน
+                          บันทึก
                         </button>
-                        
-                        <div className="flex space-x-2">
-                          <button 
-                            onClick={() => openEditUserModal(user)}
-                            className="flex-1 flex items-center justify-center px-3 py-2 bg-gray-100 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-200 transition-colors"
-                          >
-                            <Edit className="w-4 h-4 mr-1" />
-                            แก้ไข
-                          </button>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <select
+                        value={user.status}
+                        onChange={(e) => updateUserStatus(user._id, e.target.value as any)}
+                        className={`text-xs font-semibold rounded-full px-2 py-1 border-0 ${getStatusColor(user.status)}`}
+                      >
+                        <option value="active">ใช้งาน</option>
+                        <option value="inactive">ไม่ใช้งาน</option>
+                      </select>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      <div className="space-y-1">
+                        <div className="flex items-center">
                           <button
-                            onClick={() => deleteUser(user._id)}
-                            className="flex-1 flex items-center justify-center px-3 py-2 bg-red-100 text-red-700 text-sm font-medium rounded-lg hover:bg-red-200 transition-colors"
+                            onClick={() => openCreditsModal(user)}
+                            className="flex items-center text-blue-600 hover:text-blue-900"
                           >
-                            <Trash2 className="w-4 h-4 mr-1" />
-                            ลบ
+                            Credits: <DollarSign className="w-4 h-4 mr-1" />{user.credits || 0}
                           </button>
                         </div>
+                        <div><strong>ยอดเงิน:</strong> ${user.accountBalance || 0}</div>
+                        <div><strong>วันนี้:</strong> ${user.todayEarnings || 0}</div>
+                        <div><strong>สัปดาห์:</strong> ${user.weekEarnings || 0}</div>
+                        <div><strong>เดือน:</strong> ${user.totalEarned || 0}</div>
+                        <div><strong>การซื้อ:</strong> {user.totalPurchases || 0}</div>
                       </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      <div className="space-y-1">
+                        <div><strong>ผู้เยี่ยมชม:</strong> {user.engagementMetrics?.visitors || 0}</div>
+                        <div><strong>ไลค์:</strong> {user.engagementMetrics?.likes || 0}</div>
+                        <div><strong>ผู้ติดตาม:</strong> {user.engagementMetrics?.followers || 0}</div>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      <div className="space-y-1">
+                        {user.address && (
+                          <div>
+                            <span className="text-xs">
+                              {user.address.street}, {user.address.city}<br/>
+                              {user.address.state} {user.address.zipCode}, {user.address.country}
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      <div className="space-y-1">
+                        {user.bankDetails && (
+                          <div>
+                            <span className="text-xs">
+                              {user.bankDetails.bankName}<br/>
+                              เลขบัญชี: {user.bankDetails.accountNumber}<br/>
+                              ชื่อเจ้าของบัญชี: {user.bankDetails.accountOwnerName}
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                    </td>
+                    <td className="px-3 py-4 whitespace-nowrap text-sm text-gray-900">
+                      <button
+                        onClick={() => openWithdrawalModal(user)}
+                        className="inline-flex items-center px-3 py-1.5 bg-blue-100 text-blue-700 text-xs font-medium rounded-lg hover:bg-blue-200 transition-colors"
+                      >
+                        <Eye className="w-3 h-3 mr-1" />
+                        ดู
+                      </button>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                      <button 
+                        onClick={() => openEditUserModal(user)}
+                        className="text-blue-600 hover:text-blue-900 mr-3"
+                      >
+                        <Edit className="w-4 h-4" />
+                      </button>
+                      <button
+                        onClick={() => deleteUser(user._id)}
+                        className="text-red-600 hover:text-red-900"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         )}
       </div>

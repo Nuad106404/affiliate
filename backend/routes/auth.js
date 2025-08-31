@@ -92,8 +92,7 @@ router.post('/register', [
       const isTempCodeHolder = referringCodeHolder.status === 'inactive' && 
                             referringCodeHolder.phone.startsWith('refcode-');
       
-      // Add bonus credits for the new user
-      bonusCredits = 100;
+      // No bonus credits for new users
     }
 
     // Create user (force role to client for public registration)
@@ -104,7 +103,7 @@ router.post('/register', [
       role: 'client',
       address,
       bankDetails,
-      credits: bonusCredits // Add bonus credits if referral code was used
+      credits: 0 // No bonus credits for new users
     });
 
     // Don't generate referral code for new users - only admins can create referral codes

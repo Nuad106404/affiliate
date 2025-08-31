@@ -155,10 +155,10 @@ const ProfilePage: React.FC = () => {
         joinDate: user?.createdAt || new Date().toISOString()
       },
       activity: {
-        totalPurchases: user?.totalPurchases || 110,
-        creditsEarned: user?.credits || 100,
+        totalPurchases: user?.totalPurchases || 0,
+        creditsEarned: user?.credits || 0,
         accountBalance: user?.accountBalance || 0,
-        affiliateEarnings: user?.totalEarned || 5000
+        affiliateEarnings: user?.totalEarned || 0
       }
     });
 
