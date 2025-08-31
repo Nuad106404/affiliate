@@ -397,7 +397,7 @@ const ProductManagement: React.FC = () => {
                 {editingProduct.images.map((image: any, index: number) => (
                   <div key={index} className="relative">
                     <img
-                      src={image.url.startsWith('/uploads/') ? `${import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:5001'}${image.url}` : image.url}
+                      src={image.url.startsWith('/uploads/') ? `${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5001'}${image.url}` : image.url}
                       alt={image.alt || `Product image ${index + 1}`}
                       className="w-20 h-20 object-cover rounded-lg border border-gray-300"
                     />

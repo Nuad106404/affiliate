@@ -49,7 +49,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       if (token) {
         try {
           // Verify token with backend
-          const response = await fetch('http://localhost:5001/api/auth/verify', {
+          const response = await fetch(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5001'}/api/auth/verify`, {
             method: 'GET',
             headers: {
               'Authorization': `Bearer ${token}`,

@@ -41,7 +41,7 @@ const AuditLogs: React.FC = () => {
     setLoading(true);
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:5001/api/audit-logs', {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5001'}/api/admin/audit-logs`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -176,7 +176,7 @@ const AuditLogs: React.FC = () => {
     setDeleteAllLoading(true);
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:5001/api/audit-logs/all', {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5001'}/api/audit-logs/all`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`,

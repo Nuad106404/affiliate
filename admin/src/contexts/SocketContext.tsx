@@ -25,7 +25,7 @@ export const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
 
   useEffect(() => {
     if (user) {
-      const newSocket = io('http://localhost:4000', {
+      const newSocket = io(import.meta.env.VITE_SOCKET_URL || 'http://localhost:4000', {
         transports: ['websocket', 'polling'],
         timeout: 20000,
       });

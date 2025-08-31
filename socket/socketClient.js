@@ -1,7 +1,8 @@
 const { io } = require('socket.io-client');
+require('dotenv').config();
 
 class SocketClient {
-  constructor(url = 'http://localhost:4000') {
+  constructor(url = process.env.SOCKET_URL || 'http://localhost:4000') {
     this.socket = null;
     this.url = url;
     this.connected = false;

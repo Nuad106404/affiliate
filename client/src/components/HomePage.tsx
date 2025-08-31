@@ -61,7 +61,7 @@ const HomePage: React.FC = () => {
     
     try {
       // Fetch real products from API
-      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5001/api'}/products?limit=3`);
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5001'}/api/products?limit=3`);
       if (response.ok) {
         const data = await response.json();
         console.log('Fetched products:', data.products);

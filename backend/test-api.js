@@ -1,6 +1,7 @@
 const axios = require('axios');
+require('dotenv').config();
 
-const BASE_URL = 'http://localhost:5001/api';
+const BASE_URL = `${process.env.BACKEND_URL || 'http://localhost:5001'}/api`;
 
 async function testAPI() {
   console.log('🧪 Testing Backend API Endpoints...\n');

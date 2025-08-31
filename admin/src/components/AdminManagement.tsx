@@ -46,7 +46,7 @@ const AdminManagement: React.FC = () => {
     setLoading(true);
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:5001/api/admin/admins', {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5001'}/api/admin/admins`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -101,7 +101,7 @@ const AdminManagement: React.FC = () => {
       
       if (editingAdmin) {
         // Update existing admin
-        const response = await fetch(`http://localhost:5001/api/admin/admins/${editingAdmin.id}`, {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5001'}/api/admin/admins/${editingAdmin.id}`, {
           method: 'PUT',
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -121,7 +121,7 @@ const AdminManagement: React.FC = () => {
         }
       } else {
         // Create new admin
-        const response = await fetch('http://localhost:5001/api/admin/register-admin', {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5001'}/api/admin/register-admin`, {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -167,7 +167,7 @@ const AdminManagement: React.FC = () => {
     if (window.confirm('คุณแน่ใจหรือไม่ว่าต้องการลบผู้ดูแลนี้? การกระทำนี้ไม่สามารถย้อนกลับได้')) {
       try {
         const token = localStorage.getItem('token');
-        const response = await fetch(`http://localhost:5001/api/admin/users/${adminId}`, {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5001'}/api/admin/users/${adminId}`, {
           method: 'DELETE',
           headers: {
             'Authorization': `Bearer ${token}`,

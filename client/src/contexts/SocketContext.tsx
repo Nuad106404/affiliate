@@ -27,7 +27,7 @@ export const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
   useEffect(() => {
     if (!user) return;
 
-    const newSocket = io('http://localhost:4000', {
+    const newSocket = io(import.meta.env.VITE_SOCKET_URL || 'http://localhost:4000', {
       transports: ['websocket', 'polling'],
       timeout: 20000,
     });
@@ -154,7 +154,7 @@ export const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
             }
             
             try {
-              const response = await fetch(`http://localhost:5001/api/messages/delete/${messageId}`, {
+              const response = await fetch(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5001'}/api/messages/delete/${messageId}`, {
                 method: 'DELETE',
                 headers: {
                   'Authorization': `Bearer ${localStorage.getItem('token')}`,
