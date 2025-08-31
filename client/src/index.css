@@ -1,0 +1,442 @@
+/* Modern Design System - 2025 Standards */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Modern Color Palette */
+  --primary-50: #eff6ff;
+  --primary-100: #dbeafe;
+  --primary-200: #bfdbfe;
+  --primary-300: #93c5fd;
+  --primary-400: #60a5fa;
+  --primary-500: #3b82f6;
+  --primary-600: #2563eb;
+  --primary-700: #1d4ed8;
+  --primary-800: #1e40af;
+  --primary-900: #1e3a8a;
+  
+  /* Neutral Palette */
+  --neutral-50: #fafafa;
+  --neutral-100: #f5f5f5;
+  --neutral-200: #e5e5e5;
+  --neutral-300: #d4d4d4;
+  --neutral-400: #a3a3a3;
+  --neutral-500: #737373;
+  --neutral-600: #525252;
+  --neutral-700: #404040;
+  --neutral-800: #262626;
+  --neutral-900: #171717;
+  
+  /* Semantic Colors */
+  --success-500: #10b981;
+  --warning-500: #f59e0b;
+  --error-500: #ef4444;
+  
+  /* Modern Spacing Scale */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4rem;
+  
+  /* Modern Border Radius */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+  
+  /* Modern Shadows */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  
+  /* Admin sidebar width */
+  --admin-sidebar-width: 16rem;
+}
+
+/* Modern Base Styles */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  background-color: var(--neutral-50);
+  color: #1f2937;
+}
+
+/* Modern Typography Scale */
+.text-display-lg { font-size: 3.5rem; line-height: 1.1; font-weight: 700; color: #111827; }
+.text-display-md { font-size: 2.75rem; line-height: 1.15; font-weight: 700; color: #111827; }
+.text-display-sm { font-size: 2.25rem; line-height: 1.2; font-weight: 600; color: #111827; }
+.text-heading-lg { font-size: 1.875rem; line-height: 1.25; font-weight: 600; color: #111827; }
+.text-heading-md { font-size: 1.5rem; line-height: 1.3; font-weight: 600; color: #111827; }
+.text-heading-sm { font-size: 1.25rem; line-height: 1.35; font-weight: 600; color: #111827; }
+.text-body-lg { font-size: 1.125rem; line-height: 1.5; font-weight: 400; color: #374151; }
+.text-body-md { font-size: 1rem; line-height: 1.5; font-weight: 400; color: #374151; }
+.text-body-sm { font-size: 0.875rem; line-height: 1.45; font-weight: 400; color: #374151; }
+.text-caption { font-size: 0.75rem; line-height: 1.4; font-weight: 500; color: #6b7280; }
+
+/* Modern Component Styles */
+@layer components {
+  /* Modern Button System */
+  .btn {
+    @apply inline-flex items-center justify-center font-medium transition-all duration-200 ease-in-out;
+    @apply focus:outline-none focus:ring-2 focus:ring-offset-2;
+    @apply disabled:opacity-50 disabled:cursor-not-allowed;
+    border-radius: var(--radius-lg);
+  }
+  
+  .btn-primary {
+    @apply bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500;
+    @apply shadow-sm hover:shadow-md active:scale-[0.98];
+  }
+  
+  .btn-secondary {
+    @apply bg-white text-gray-700 border border-gray-300 hover:bg-gray-50 focus:ring-blue-500;
+    @apply shadow-sm hover:shadow-md active:scale-[0.98];
+  }
+  
+  .btn-ghost {
+    @apply text-gray-600 hover:text-gray-900 hover:bg-gray-100 focus:ring-gray-500;
+    @apply active:scale-[0.98];
+  }
+  
+  .btn-sm { @apply px-3 py-1.5 text-sm; }
+  .btn-md { @apply px-4 py-2 text-sm; }
+  .btn-lg { @apply px-6 py-3 text-base; }
+  .btn-xl { @apply px-8 py-4 text-lg; }
+  
+  /* Modern Card System */
+  .card {
+    @apply bg-white rounded-xl shadow-sm border border-gray-100;
+    @apply transition-all duration-200 ease-in-out;
+  }
+  
+  .card-hover {
+    @apply hover:shadow-md hover:-translate-y-0.5;
+  }
+  
+  .card-interactive {
+    @apply cursor-pointer hover:shadow-lg hover:-translate-y-1;
+    @apply active:scale-[0.99] transition-all duration-200;
+  }
+  
+  /* Modern Input System */
+  .input {
+    @apply w-full px-4 py-3 border border-gray-300 rounded-lg;
+    @apply focus:ring-2 focus:ring-blue-500 focus:border-blue-500;
+    @apply transition-all duration-200 ease-in-out;
+    @apply placeholder:text-gray-400;
+  }
+  
+  .input-error {
+    @apply border-red-300 focus:ring-red-500 focus:border-red-500;
+  }
+  
+  /* Modern Badge System */
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+  
+  .badge-primary { @apply bg-blue-100 text-blue-800; }
+  .badge-success { @apply bg-green-100 text-green-800; }
+  .badge-warning { @apply bg-yellow-100 text-yellow-800; }
+  .badge-error { @apply bg-red-100 text-red-800; }
+  .badge-neutral { @apply bg-gray-100 text-gray-800; }
+  
+  /* Shopify-Style Navigation */
+  .nav-item {
+    @apply text-gray-600 hover:text-green-600 transition-colors duration-200;
+  }
+
+  .nav-item-active {
+    @apply text-green-600 border-b-2 border-green-600;
+  }
+
+  /* Swiper custom styles */
+  .hero-swiper .swiper-pagination-bullet {
+    @apply bg-green-600 opacity-50;
+  }
+
+  .hero-swiper .swiper-pagination-bullet-active {
+    @apply bg-green-600 opacity-100;
+  }
+
+  .hero-swiper .swiper-button-next,
+  .hero-swiper .swiper-button-prev {
+    @apply text-green-600;
+  }
+
+  .hero-swiper .swiper-button-next:after,
+  .hero-swiper .swiper-button-prev:after {
+    @apply text-sm font-bold;
+  }
+}
+
+/* Modern Utility Classes */
+@layer utilities {
+  /* Glass Morphism */
+  .glass {
+    @apply bg-white/80 backdrop-blur-md border border-white/20;
+  }
+  
+  /* Modern Gradients */
+  .gradient-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  }
+  
+  .gradient-success {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  }
+  
+  /* Scrollbar Styling */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: var(--neutral-300) transparent;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: var(--neutral-300);
+    border-radius: 3px;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background-color: var(--neutral-400);
+  }
+  
+  /* Hide scrollbar completely */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Line clamp utilities */
+  .line-clamp-1 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+  }
+  
+  .line-clamp-2 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+  
+  .line-clamp-3 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+  
+  /* Modern Focus States */
+  .focus-ring {
+    @apply focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2;
+  }
+  
+  /* Modern Animations */
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  
+  .animate-slide-up {
+    animation: slideUp 0.3s ease-out;
+  }
+  
+  .animate-scale-in {
+    animation: scaleIn 0.2s ease-out;
+  }
+}
+
+/* Modern Keyframes */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { 
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from { 
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to { 
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Modern Responsive Design */
+@media (max-width: 640px) {
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  /* Mobile-first typography adjustments */
+  .text-display-lg { font-size: 2.5rem; }
+  .text-display-md { font-size: 2rem; }
+  .text-display-sm { font-size: 1.75rem; }
+}
+
+/* Admin Layout */
+.admin-content {
+  transition: margin-left 0.3s ease-in-out;
+}
+
+@media (min-width: 1024px) {
+  .admin-content {
+    margin-left: var(--admin-sidebar-width);
+  }
+}
+
+@media (max-width: 1023px) {
+  .admin-content {
+    margin-left: 0;
+  }
+}
+
+/* Modern Touch Interactions */
+@media (hover: none) and (pointer: coarse) {
+  .hover\:scale-105:hover {
+    transform: none;
+  }
+  
+  button, .cursor-pointer {
+    -webkit-tap-highlight-color: rgba(59, 130, 246, 0.1);
+  }
+}
+
+/* Safe Area Support */
+.safe-area-pb {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* Bottom Navigation Spacing */
+@media (max-width: 768px) {
+  .mobile-bottom-spacing {
+    padding-bottom: 88px;
+  }
+  
+  .messages-container {
+    height: calc(100vh - 88px);
+    max-height: calc(100vh - 88px);
+  }
+}
+
+/* Modern Loading States */
+.skeleton {
+  @apply animate-pulse bg-gray-200 rounded;
+}
+
+.skeleton-text {
+  @apply h-4 bg-gray-200 rounded animate-pulse;
+}
+
+.skeleton-avatar {
+  @apply w-10 h-10 bg-gray-200 rounded-full animate-pulse;
+}
+
+/* Modern Status Indicators */
+.status-online {
+  @apply w-3 h-3 bg-green-500 rounded-full border-2 border-white;
+}
+
+.status-offline {
+  @apply w-3 h-3 bg-gray-400 rounded-full border-2 border-white;
+}
+
+.status-away {
+  @apply w-3 h-3 bg-yellow-500 rounded-full border-2 border-white;
+}
+
+/* Modern Notification Badges */
+.notification-badge {
+  @apply absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs;
+  @apply rounded-full flex items-center justify-center font-medium;
+  animation: pulse 2s infinite;
+}
+
+/* Modern Dark Mode Support (Future Enhancement) */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --neutral-50: #171717;
+    --neutral-100: #262626;
+    --neutral-200: #404040;
+    --neutral-800: #f5f5f5;
+    --neutral-900: #fafafa;
+  }
+}
+
+/* Modern Accessibility Improvements */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .btn-primary {
+    @apply border-2 border-blue-800;
+  }
+  
+  .card {
+    @apply border-2 border-gray-300;
+  }
+}
+
+/* Modern Print Styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  .card {
+    @apply shadow-none border border-gray-300;
+  }
+}
